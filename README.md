@@ -7,7 +7,7 @@ Santiago San Martín - santiagosanmartin2000@gmail.com
 
 ## Temática y breve descripción:
 
-Es una aplicación web de un hotel destinada a la realización de reservas de habitaciones y a la visualización de la disponibilidad de las mismas.
+Es una aplicación web de un hotel llamado "Mirasol" destinada a la realización de reservas de habitaciones y a la visualización de la disponibilidad de las mismas.
 
 ## Diagrama
 
