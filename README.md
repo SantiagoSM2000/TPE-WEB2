@@ -13,4 +13,4 @@ Es una aplicación web de un hotel destinada a la realización de reservas de ha
 
 Este diagrama realizado con phpMyAdmin muestra la estructura de las tablas "huespedes", "habitaciones" y "reservas", incluyendo los campos, los tipos de datos y los tipos de clave (clave primaria y clave foránea) que se utilizan en cada una de ellas.
 
-![Diagrama](https://github.com/SantiagoSM2000/TPE-WEB2/assets/)
+![Diagrama](https://github.com/SantiagoSM2000/TPE-WEB2/blob/main/db_mirasol-diagrama.png)
