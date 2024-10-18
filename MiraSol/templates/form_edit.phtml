@@ -1,0 +1,29 @@
+    <?php require_once "templates/layout/header.phtml";?>
+
+
+
+    <div class="d-flex justify-content-center mt-5">
+    <div class="card d-flex border border-primary-subtle p-3 text-center text-bg-light ">
+        <form action="<?php echo "edit/" . $reserva->ID_Reserva?>" method="POST" class="row g-3 needs-validation p-3 mt-5 mb-5 mx-5" novalidate>
+            <div >
+                <label for="validationCustom01" class="form-label" for="room_number"><em>Número de habitación</em>: <strong> <?php echo htmlspecialchars($reserva->Nro_Habitacion) ?> </strong> </label>
+                <input type="number" class="form-control text-center" id="room_number" value="" name="room_number" required >
+                
+            </div>
+            <div >
+                <label for="validationCustom02" class="form-label" for="date"><em>Fecha de la reserva</em>: <strong> <?php echo htmlspecialchars($reserva->Fecha) ?> </strong></label>
+                <input type="date" class="form-control text-center" id="date" value="" name="date" required >
+            </div>
+            <div >
+                <button class="btn btn-primary" type="submit">Editar</button>
+            </div>
+        </form>
+    </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <a href="" class="btn btn-primary m-1">Volver al home</a>
+     </div>
+
+
+
+    <?php require_once "templates/layout/footer.phtml";?>
