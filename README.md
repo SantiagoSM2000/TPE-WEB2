@@ -13,4 +13,4 @@ Es una aplicación web de un hotel llamado "Mirasol" destinada a la realización
 
 Este diagrama realizado con phpMyAdmin muestra la estructura de las tablas "huespedes", "habitaciones" y "reservas", incluyendo los campos, los tipos de datos y los tipos de clave (clave primaria y clave foránea) que se utilizan en cada una de ellas.
 
-![Diagrama](https://github.com/SantiagoSM2000/TPE-WEB2/blob/main/db_mirasol-diagrama.png)
+![Diagrama](https://github.com/SantiagoSM2000/TPE-WEB2/blob/main/esquema_base_de_datos.png)
