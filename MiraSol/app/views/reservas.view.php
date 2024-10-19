@@ -4,9 +4,10 @@ class ReservasView{
     
     private $user = null;
 
-    public function __construct($user) {
+    public function __construct($user = null) {
         $this->user = $user;
     }
+
 
     //Muestra un error
     public function displayError($error){

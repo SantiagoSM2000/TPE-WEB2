@@ -111,11 +111,4 @@ class ReservasController{
         $this->model->updateReservation($id, $room_number, $date);
         header("Location: " . BASE_URL);
     }
-
-
-
-
-
-        
-
 }

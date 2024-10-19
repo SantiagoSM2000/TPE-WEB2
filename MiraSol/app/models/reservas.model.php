@@ -1,11 +1,14 @@
 <?php
 
+require_once "config.php";
+
 class ReservasModel{
 
     private $db;
 
+    //'mysql:host=localhost;dbname=hoteldb;charset=utf8','root',''
     public function __construct(){//constructor de la clase
-        $this->db = new PDO('mysql:host=localhost;dbname=hoteldb;charset=utf8','root','');
+        $this->db = new PDO('mysql:host=' . MYSQL_HOST . ';dbname=' . MYSQL_DB . ';charset=utf8', MYSQL_USER , MYSQL_PASS);
     }
 
     public function getReservations(){

@@ -11,5 +11,8 @@ class AuthView{
 
     //TODO muestra formulario para registrarse
     public function displaySignup(){
+        require "templates/form_signup.phtml";
     }
+
+    
 }

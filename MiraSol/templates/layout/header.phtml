@@ -27,14 +27,23 @@
                   <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="">Listado de reservas</a>
                   </li>
+                  <?php if (isset($this->user->username)): ?>
                   <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="addform">Agregar reserva</a>
                   </li>
-                  <?php if (isset($this->user->username)): ?>
                   <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="logout">Cerrar sesión</a>
                   </li>
                   <?php endif; ?>
+                  <?php if (!isset($this->user->username)): ?>
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="showlogin">Iniciar sesión</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="showsignup">Registrarse</a>
+                  </li>
+                  <?php endif; ?>
+                  
                 </ul>
               </div>
             </div>

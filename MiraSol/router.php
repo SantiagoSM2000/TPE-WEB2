@@ -29,6 +29,7 @@ if (!empty($_GET["action"])){
 //      delete/:id    ReservasController->removeReservation($id)
 //      showlogin     AuthController->showLogin() --> login --> AuthController->login()
 //      logout        AuthController->logout()
+//      showsignup     AuthController->showSignup() --> signup --> AuthController->signup()
 
 
 //Parsea la accion para separar accion de parametros
@@ -94,6 +95,14 @@ switch ($params[0]) {
     case "logout":
         $controller = new AuthController();
         $controller->logout();
+        break;
+    case "showsignup":
+        $controller = new AuthController();
+        $controller->showsignup();
+        break;
+    case "signup":
+        $controller = new AuthController();
+        $controller->signup();
         break;
     default:
         echo "Error 404 Page Not Found";
