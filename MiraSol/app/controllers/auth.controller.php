@@ -1,7 +1,7 @@
 <?php
 require_once "app/views/auth.view.php";
 require_once "app/models/user.model.php";
-require_once "app/views/reservas.view.php";
+require_once "app/views/reservations.view.php";
 
 class AuthController{
 
@@ -9,20 +9,20 @@ class AuthController{
     private $view;
     private $viewReservas;
 
-    public function __construct(){//constructor de la clase
+    public function __construct(){//Constructor de la clase
         $this->model = new UserModel();
         $this->view = new AuthView();
+        //Se llama al ReservasView para mostrar los errores, se debería de hacer un ErroresView asi se separan las responsabilidades correctamente
         $this->viewReservas = new ReservasView();
     }
 
-    public function showLogin(){
+    public function showLogin(){//Funcion para mostrar el formulario de login
 
-        //llamo a la vista para mostrar el formulario
+        //llamo a la vista para mostrar el formulario de inicio de sesión
         $this->view->displayLogin();
     }
 
-    public function login(){ 
-        
+    public function login(){ //Funcion para realizar la comprobación del login e inicio de sesión si las credenciales son correctas
         
         //Valida el nombre de usuario
         if (!isset($_POST["username"]) || empty($_POST["username"])){
@@ -37,86 +37,79 @@ class AuthController{
         $username = htmlspecialchars($_POST["username"]);
         $password = htmlspecialchars($_POST["password"]);
 
-        //Verificar que el usuario está en la base de datos
 
-        $userFromDB = $this->model->getClientByUserName($username);
+        //LLama al modelo para traer al usuario de la base de datos
+
+        $userFromDB = $this->model->getUserByUserName($username);
                 
-
-        if ($userFromDB && password_verify($password, $userFromDB->Contraseña)){
-            //Guardo en la sesión el ID del usuario
+        //Comprobar si la contraseña ingresada corresponde al hash almacenado
+        if ($userFromDB && password_verify($password, $userFromDB->Password)){
+            //Se inicia la sesión
             session_start();
-
-            $_SESSION["ID_USER"] = $userFromDB->ID_Cliente;
-            $_SESSION["USERNAME_USER"] = $userFromDB->NombreUsuario;
+            //Guardo en la sesión el id del usuario, el nombre de usuario y la ultima actividad (se podría usar para hacer un timeout y cerrar la sesion luego de x tiempo)
+            $_SESSION["ID_USER"] = $userFromDB->ID_User;
+            $_SESSION["USERNAME_USER"] = $userFromDB->Username;
             $_SESSION["LAST_ACTIVITY"] = time();
-            $_SESSION["NAME_USER"] = $userFromDB->Nombre;
 
-
+            //Con header me dirijo al url base del sitio
             header("Location: " . BASE_URL);
-
         } else {
+            //Llamo a la vista para mostrar el formulario con el mensaje de error 
             return $this->view->displayLogin("Credenciales incorrectas");
         }
-
-    
-        //$id = $this->model->insertUser($username, $password);
-
-
     }
 
-    public function logout(){
+    public function logout(){//Función para cerrar sesión
         session_start(); //Busca la cookie
         session_destroy(); //Destruye la cookie
         header("Location: " . BASE_URL);
     }
 
-    public function showSignup(){
-        //llamo a la vista para mostrar el formulario de registro
+    public function showSignup(){//Función para mostrar el formulario de registro
+
+        //Llamo a la vista para mostrar el formulario de registro
         $this->view->displaySignup();
         
     }
 
-    public function signup(){
-        if (!isset($_POST["firstname"]) || empty($_POST["firstname"])){
-            return $this->viewReservas->displayError("Faltó completar el nombre");
-        }
-        if (!isset($_POST["lastname"]) || empty($_POST["lastname"])){
-            return $this->viewReservas->displayError("Faltó completar el apellido");
-        }
-        if (!isset($_POST["email"]) || empty($_POST["email"])){
-            return $this->viewReservas->displayError("Faltó completar el email");
-        }
+    public function signup(){//Función para realizar la comprobación del signup, almacenar el nuevo usuario y luego iniciar la sesión con esas credenciales
+
+        //Valida el nombre de usuario
         if (!isset($_POST["username"]) || empty($_POST["username"])){
             return $this->viewReservas->displayError("Faltó completar el nombre de usuario");
         }
+
+        //Valida la contraseña
         if (!isset($_POST["password"]) || empty($_POST["password"])){
             return $this->viewReservas->displayError("Faltó completar la contraseña");
         }
-        if (!isset($_POST["phone"]) || empty($_POST["phone"])){
-            return $this->viewReservas->displayError("Faltó completar el número de celular");
-        }
         
-
-        $firstname = htmlspecialchars($_POST["firstname"]);
-        $lastname = htmlspecialchars($_POST["lastname"]);
-        $email = htmlspecialchars($_POST["email"]);
         $username = htmlspecialchars($_POST["username"]);
         $password = htmlspecialchars($_POST["password"]);
-        $phone = htmlspecialchars($_POST["phone"]);
 
+        //LLamo al modelo para conseguir el usuario por nombre de usuario, si me retorna algo distinto a NULL el usuario ya existe
+        $userFromDB = $this->model->getUserByUserName($username);
+
+        if ($userFromDB != NULL){
+            return $this->viewReservas->displayError("Ya existe un usuario con ese nombre de usuario");
+        }
+
+        //Hashea la contraseña ingresada usando bcrypt
 
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
-        $id = $this->model->insertClient($firstname, $lastname, $email, $username, $hashedPassword, $phone);
+        //Se inserta el usuario nuevo con la contraseña hasheada
 
-        $userFromDB = $this->model->getClientByUserName($username);
+        $id = $this->model->insertUser($username, $hashedPassword);
 
+        //Se inicia la sesión
         session_start();
-
-        $_SESSION["ID_USER"] = $userFromDB->ID_Cliente;
+        ////Guardo en la sesión el nombre de usuario y la ultima actividad
+        //$_SESSION["ID_USER"] = $userFromDB->ID_User;
         $_SESSION["USERNAME_USER"] = $username;
         $_SESSION["LAST_ACTIVITY"] = time();
 
+        //Con header me dirijo al url base del sitio
         header("Location: " . BASE_URL);
     }
 

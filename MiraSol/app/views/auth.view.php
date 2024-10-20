@@ -13,6 +13,4 @@ class AuthView{
     public function displaySignup(){
         require "templates/form_signup.phtml";
     }
-
-    
 }

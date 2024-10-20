@@ -1,19 +1,17 @@
 <?php
 
-require_once "config.php";
+require_once "Model.php";
 
-class UserModel{
+class UserModel extends Model{
 
-    private $db;
-
-    public function __construct(){//constructor de la clase
-        $this->db = new PDO('mysql:host=' . MYSQL_HOST . ';dbname=' . MYSQL_DB . ';charset=utf8', MYSQL_USER , MYSQL_PASS);
+    public function __construct(){//Constructor de la clase con las constantes del config.php
+        parent::__construct();//Se invoca al constructor de la clase padre (Model)
     }
 
-    public function getClientByUserName($username){
+    public function getUserByUserName($username){//Función para conseguir el usuario por nombre de usuario desde la base de datos
 
         //Solicito el usuario de la base de datos
-        $query = $this->db->prepare("SELECT * FROM clientes WHERE NombreUsuario = ?");
+        $query = $this->db->prepare("SELECT * FROM users WHERE Username = ?");
         $query->execute([$username]);
         $user = $query->fetch(PDO::FETCH_OBJ);
     
@@ -21,11 +19,11 @@ class UserModel{
         return $user;
     }
 
-    public function insertClient($firstname, $lastname, $email, $username, $password, $phone){
+    public function insertUser($username, $password){
 
         $id = NULL;
-        $query = $this->db->prepare("INSERT INTO clientes (ID_Cliente, Nombre, Apellido, Email, NombreUsuario, Contraseña, Telefono) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $query->execute([$id, $firstname, $lastname, $email, $username, $password, $phone]);
+        $query = $this->db->prepare("INSERT INTO users (ID_User, Username, Password) VALUES (?, ?, ?)");
+        $query->execute([$id,$username, $password]);
     
         return $this->db->lastinsertId();
     }

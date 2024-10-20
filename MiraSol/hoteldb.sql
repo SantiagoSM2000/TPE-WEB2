@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 18, 2024 at 08:10 PM
+-- Generation Time: Oct 20, 2024 at 04:50 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -24,94 +24,124 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `clientes`
+-- Table structure for table `clients`
 --
 
-CREATE TABLE `clientes` (
-  `ID_Cliente` int(11) NOT NULL,
-  `Nombre` varchar(50) NOT NULL,
-  `Apellido` varchar(50) NOT NULL,
+CREATE TABLE `clients` (
+  `ID_Client` int(11) NOT NULL,
+  `Firstname` varchar(50) NOT NULL,
+  `Lastname` varchar(50) NOT NULL,
   `Email` varchar(100) NOT NULL,
-  `NombreUsuario` varchar(150) NOT NULL,
-  `Contraseña` char(60) NOT NULL,
-  `Telefono` varchar(20) NOT NULL
+  `Phone_number` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `clientes`
+-- Dumping data for table `clients`
 --
 
-INSERT INTO `clientes` (`ID_Cliente`, `Nombre`, `Apellido`, `Email`, `NombreUsuario`, `Contraseña`, `Telefono`) VALUES
-(1, 'Santiago', 'San Martín', 'ssm@gmail.com', 'webadmin', '$2y$10$KpFpJvyTfLlvk1AXMT1nauLCvCc7qCupkGKhzHXudqvYh50RuYCZS', '000'),
-(5, 'Marcos', 'Juarez', 'mj@gmail.com', 'notadmin3', '$2y$10$ypMTfzmEuAYDkKBPN2BWHuFjPjFf.P9UyD/E1BfuFmsFAz8k4hYQC', '111');
+INSERT INTO `clients` (`ID_Client`, `Firstname`, `Lastname`, `Email`, `Phone_number`) VALUES
+(1, 'Juan', 'Perez', 'jp@gmail.com', '000'),
+(5, 'Marcos', 'Juarez', 'mj@gmail.com', '111');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `reservas`
+-- Table structure for table `reservations`
 --
 
-CREATE TABLE `reservas` (
-  `ID_Reserva` int(11) NOT NULL,
-  `Fecha` date NOT NULL,
-  `Nro_Habitacion` int(11) NOT NULL,
-  `ID_Cliente` int(11) NOT NULL
+CREATE TABLE `reservations` (
+  `ID_Reservation` int(11) NOT NULL,
+  `Date` date NOT NULL,
+  `Room_number` int(11) NOT NULL,
+  `ID_Client` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `reservas`
+-- Dumping data for table `reservations`
 --
 
-INSERT INTO `reservas` (`ID_Reserva`, `Fecha`, `Nro_Habitacion`, `ID_Cliente`) VALUES
-(13, '2024-10-19', 323, 5),
-(14, '2024-10-31', 202, 1),
-(16, '2024-10-17', 606, 5),
-(17, '2024-10-17', 606, 5),
-(18, '2024-10-31', 701, 1);
+INSERT INTO `reservations` (`ID_Reservation`, `Date`, `Room_number`, `ID_Client`) VALUES
+(29, '2024-10-20', 202, 1),
+(30, '2024-10-21', 303, 1),
+(31, '2024-10-20', 303, 5),
+(32, '2024-10-21', 404, 5),
+(33, '2024-10-23', 505, 5);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `ID_User` int(11) NOT NULL,
+  `Username` varchar(50) NOT NULL,
+  `Password` char(60) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`ID_User`, `Username`, `Password`) VALUES
+(1, 'webadmin', '$2y$10$KpFpJvyTfLlvk1AXMT1nauLCvCc7qCupkGKhzHXudqvYh50RuYCZS');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `clientes`
+-- Indexes for table `clients`
 --
-ALTER TABLE `clientes`
-  ADD PRIMARY KEY (`ID_Cliente`),
+ALTER TABLE `clients`
+  ADD PRIMARY KEY (`ID_Client`),
   ADD UNIQUE KEY `Email` (`Email`);
 
 --
--- Indexes for table `reservas`
+-- Indexes for table `reservations`
 --
-ALTER TABLE `reservas`
-  ADD PRIMARY KEY (`ID_Reserva`),
-  ADD KEY `fk_cliente` (`ID_Cliente`);
+ALTER TABLE `reservations`
+  ADD PRIMARY KEY (`ID_Reservation`),
+  ADD KEY `fk_cliente` (`ID_Client`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`ID_User`),
+  ADD UNIQUE KEY `Username` (`Username`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `clientes`
+-- AUTO_INCREMENT for table `clients`
 --
-ALTER TABLE `clientes`
-  MODIFY `ID_Cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+ALTER TABLE `clients`
+  MODIFY `ID_Client` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `reservas`
+-- AUTO_INCREMENT for table `reservations`
 --
-ALTER TABLE `reservas`
-  MODIFY `ID_Reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+ALTER TABLE `reservations`
+  MODIFY `ID_Reservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `ID_User` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `reservas`
+-- Constraints for table `reservations`
 --
-ALTER TABLE `reservas`
-  ADD CONSTRAINT `fk_cliente` FOREIGN KEY (`ID_Cliente`) REFERENCES `clientes` (`ID_Cliente`);
+ALTER TABLE `reservations`
+  ADD CONSTRAINT `fk_cliente` FOREIGN KEY (`ID_Client`) REFERENCES `clients` (`ID_Client`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
