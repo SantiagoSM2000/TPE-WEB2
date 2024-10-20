@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 20, 2024 at 04:50 AM
+-- Generation Time: Oct 21, 2024 at 12:26 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -53,6 +53,7 @@ CREATE TABLE `reservations` (
   `ID_Reservation` int(11) NOT NULL,
   `Date` date NOT NULL,
   `Room_number` int(11) NOT NULL,
+  `Image` varchar(300) DEFAULT NULL,
   `ID_Client` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -60,12 +61,9 @@ CREATE TABLE `reservations` (
 -- Dumping data for table `reservations`
 --
 
-INSERT INTO `reservations` (`ID_Reservation`, `Date`, `Room_number`, `ID_Client`) VALUES
-(29, '2024-10-20', 202, 1),
-(30, '2024-10-21', 303, 1),
-(31, '2024-10-20', 303, 5),
-(32, '2024-10-21', 404, 5),
-(33, '2024-10-23', 505, 5);
+INSERT INTO `reservations` (`ID_Reservation`, `Date`, `Room_number`, `Image`, `ID_Client`) VALUES
+(29, '2024-10-20', 202, 'https://www.cataloniahotels.com/es/blog/wp-content/uploads/2024/01/catalonia-las-vegas-habitacion-doble-con-balcon-620x413.jpg', 1),
+(31, '2024-10-20', 303, '', 5);
 
 -- --------------------------------------------------------
 
@@ -119,13 +117,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `ID_Client` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `ID_Client` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `ID_Reservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `ID_Reservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `users`
