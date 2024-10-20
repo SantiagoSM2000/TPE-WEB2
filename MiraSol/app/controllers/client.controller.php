@@ -8,9 +8,9 @@ class ClientController{
     private $view;
     private $model;
 
-    public function __construct(){//Constructor de la clase
-        $this->view = new ClientView();
+    public function __construct($response){//Constructor de la clase
         $this->model= new ClientsModel();
+        $this->view = new ClientView($response);
     }
 
     public function showAddClientForm(){        
