@@ -62,25 +62,31 @@ class ReservationsController{
         if (!isset($_POST["date"]) || empty($_POST["date"])){
             return $this->view->displayError("Faltó completar la fecha");
         }
-                
-        $ID_Client = htmlspecialchars($_POST["ID_Cliente"]);
-        $room_number = htmlspecialchars($_POST["room_number"]);
+        /* Se tiene que habilitar la opción de no subir imagen
+        if (!isset($_POST["image"]) || empty($_POST["image"])){ 
+            return $this->view->displayError("Faltó completar el link de la imagen");
+        }*/
+        
         $date = htmlspecialchars($_POST["date"]);
+        $room_number = htmlspecialchars($_POST["room_number"]);
+        $image = htmlspecialchars($_POST["image"]);
+        $ID_Client = htmlspecialchars($_POST["ID_Cliente"]);
+        
 
-        $this->modelReservation->insertReservation($date, $room_number, $ID_Client);
+        $this->modelReservation->insertReservation($date, $room_number, $image, $ID_Client);
 
         header("Location: " . BASE_URL);
     } 
 
     public function removeReservation($id){
 
-        //llamo al modelo para conseguir la reserva con ese id, si no está entonces devuelve null
+        //Llamo al modelo para conseguir la reserva con ese id, si no está entonces devuelve null
 
         if (!$this->validReservationById($id)){
             return $this->view->displayError("No existe la reserva con el ID: " . $id);
         }
 
-        //llamo al modelo para eliminar la reserva con ese id
+        //Llamo al modelo para eliminar la reserva con ese id
         $this->modelReservation->deleteReservation($id);
         header("Location: " . BASE_URL);
     }
@@ -90,7 +96,7 @@ class ReservationsController{
         if (!$this->validReservationById($id)){
             return $this->view->displayError("No existe la reserva con el ID: " . $id);
         } else {
-            //llamo al modelo para mostrar los datos y así saber qué se está cambiando
+            //Llamo al modelo para mostrar los datos y así saber qué se está cambiando
             $reservation = $this->modelReservation->getReservationById($id);
             $client = $this->modelClients->getClientByID($reservation->ID_Client);
             $clients = $this->modelClients->getClients();
@@ -112,12 +118,17 @@ class ReservationsController{
         if (!isset($_POST["date"]) || empty($_POST["date"])){
             return $this->view->displayError("Faltó completar la fecha.");
         }
+        /* Se tiene que habilitar la opción de no subir imagen
+        if (!isset($_POST["image"]) || empty($_POST["image"])){ 
+            return $this->view->displayError("Faltó completar el link de la imagen");
+        }*/
 
-        $ID_Client = htmlspecialchars($_POST["ID_Client"]);
-        $room_number = htmlspecialchars($_POST["room_number"]);
         $date = htmlspecialchars($_POST["date"]);
+        $room_number = htmlspecialchars($_POST["room_number"]);
+        $image = htmlspecialchars($_POST["image"]);
+        $ID_Client = htmlspecialchars($_POST["ID_Client"]);
     
-        $this->modelReservation->updateReservation($id, $room_number, $date, $ID_Client);
+        $this->modelReservation->updateReservation($id, $date, $room_number, $image, $ID_Client);
         header("Location: " . BASE_URL);
     }
 }

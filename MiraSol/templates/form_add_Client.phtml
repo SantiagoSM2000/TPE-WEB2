@@ -2,24 +2,26 @@
 
 
     <div class="card d-flex border border-primary-subtle text-center text-bg-light justify-content-center container-sm mt-2 mb-2">
-        <form method="POST" action="addClientToDB" id="add">
-            <div class="form-group m-2">
-                <label for="firstname">Nombre</label>
-                <input type="text" class="form-control" id="firstname" name="firstname" required>
-            </div>
-            <div class="form-group m-2">
-                <label for="lastname">Apellido</label>
-                <input type="text" class="form-control" id="lastname" name="lastname" required>
-            </div>
-            <div class="form-group m-2">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" name="email" required>
-            </div>
-            <div class="form-group m-2">
-                <label for="phone">Teléfono</label>
-                <input type="tel" class="form-control" id="phone" name="phone" required>
-            </div>
-            <button type="sumbit" class="btn btn-primary m-2">Añadir cliente</button>
-        </form>
+        <div class="container-sm mt-2 mb-2">
+            <form method="POST" action="addClientToDB" id="add">
+                <div class="form-group m-2">
+                    <label for="firstname" class="form-label"><strong><em>Nombre</em></strong></label>
+                    <input type="text" class="form-control" id="firstname" name="firstname" required>
+                </div>
+                <div class="form-group m-2">
+                    <label for="lastname" class="form-label"><strong><em>Apellido</em></strong></label>
+                    <input type="text" class="form-control" id="lastname" name="lastname" required>
+                </div>
+                <div class="form-group m-2">
+                    <label for="email" class="form-label"><strong><em>Email</em></strong></label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="form-group m-2">
+                    <label for="phone" class="form-label"><strong><em>Número de celular</em></strong></label>
+                    <input type="tel" class="form-control" id="phone" name="phone" required>
+                </div>
+                <button type="sumbit" class="btn btn-primary">Añadir cliente</button>
+            </form>
+        </div>
     </div>
 <?php require_once "templates/layout/footer.phtml";?>

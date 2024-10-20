@@ -13,12 +13,14 @@ class ClientController{
         $this->view = new ClientView($response);
     }
 
-    public function showAddClientForm(){        
+    public function showAddClientForm(){//Función para mostrar el formulario de agregar cliente
+        
         //Llamo a la vista para visualizar formulario de clientes
         $this->view->displayAddClient();
     }
 
-    public function addClient(){
+    public function addClient(){//Función para añadir un cliente
+
         if (!isset($_POST["firstname"]) || empty($_POST["firstname"])){
             return $this->viewReservas->displayError("Faltó completar el nombre");
         }

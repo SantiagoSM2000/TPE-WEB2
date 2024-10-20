@@ -37,12 +37,12 @@ class ReservasModel extends Model{
         $query->execute([$id]);
     }
 
-    public function insertReservation($date, $room_number, $ID_Client){
+    public function insertReservation($date, $room_number, $Image, $ID_Client){
         //Inserto la reserva con los datos del usuario 
 
         $id = NULL;
-        $query = $this->db->prepare("INSERT INTO reservations (ID_Reservation, Date, Room_number, ID_Client) VALUES (?, ?, ?, ?)");
-        $query->execute([$id, $date, $room_number, $ID_Client]);
+        $query = $this->db->prepare("INSERT INTO reservations (ID_Reservation, Date, Room_number, Image, ID_Client) VALUES (?, ?, ?, ?, ?)");
+        $query->execute([$id, $date, $room_number, $Image, $ID_Client]);
     
         return $this->db->lastinsertId();
     }
@@ -59,9 +59,9 @@ class ReservasModel extends Model{
         return false;
     }
 
-    public function updateReservation($id, $room_number, $date, $ID_Client){
+    public function updateReservation($id, $date, $room_number, $image, $ID_Client){
         //Inserto la reserva con los datos del usuario 
-        $query = $this->db->prepare("UPDATE reservations SET Room_number=?, Date=?, ID_Client=? WHERE ID_Reservation=?");
-        $query->execute([$room_number, $date, $ID_Client, $id]);
+        $query = $this->db->prepare("UPDATE reservations SET Date=?, Room_number=?, Image=?, ID_Client=? WHERE ID_Reservation=?");
+        $query->execute([$date, $room_number, $image, $ID_Client, $id]);
     }
 }
