@@ -7,31 +7,32 @@ class AuthController{
 
     private $model;
     private $view;
-    private $viewReservas;
+    private $viewReservations;
 
     public function __construct(){//Constructor de la clase
+
         $this->model = new UserModel();
         $this->view = new AuthView();
         //Se llama al ReservasView para mostrar los errores, se debería de hacer un ErroresView asi se separan las responsabilidades correctamente
-        $this->viewReservas = new ReservasView();
+        $this->viewReservations = new ReservationsView();
     }
 
-    public function showLogin(){//Funcion para mostrar el formulario de login
+    public function showLogin(){//Función para mostrar el formulario de login
 
-        //llamo a la vista para mostrar el formulario de inicio de sesión
+        //Llamo a la vista para mostrar el formulario de inicio de sesión
         $this->view->displayLogin();
     }
 
-    public function login(){ //Funcion para realizar la comprobación del login e inicio de sesión si las credenciales son correctas
+    public function login(){ //Función para realizar la comprobación del login e inicio de sesión si las credenciales son correctas
         
         //Valida el nombre de usuario
         if (!isset($_POST["username"]) || empty($_POST["username"])){
-            return $this->viewReservas->displayLogin("Faltó completar el nombre de usuario");
+            return $this->viewReservations->displayLogin("Faltó completar el nombre de usuario");
         }
 
         //Valida la contraseña
         if (!isset($_POST["password"]) || empty($_POST["password"])){
-            return $this->viewReservas->displayLogin("Faltó completar la contraseña");
+            return $this->viewReservations->displayLogin("Faltó completar la contraseña");
         }
                 
         $username = htmlspecialchars($_POST["username"]);
@@ -60,6 +61,7 @@ class AuthController{
     }
 
     public function logout(){//Función para cerrar sesión
+        
         session_start(); //Busca la cookie
         session_destroy(); //Destruye la cookie
         header("Location: " . BASE_URL);
@@ -76,12 +78,12 @@ class AuthController{
 
         //Valida el nombre de usuario
         if (!isset($_POST["username"]) || empty($_POST["username"])){
-            return $this->viewReservas->displayError("Faltó completar el nombre de usuario");
+            return $this->viewReservations->displayError("Faltó completar el nombre de usuario");
         }
 
         //Valida la contraseña
         if (!isset($_POST["password"]) || empty($_POST["password"])){
-            return $this->viewReservas->displayError("Faltó completar la contraseña");
+            return $this->viewReservations->displayError("Faltó completar la contraseña");
         }
         
         $username = htmlspecialchars($_POST["username"]);
@@ -91,7 +93,7 @@ class AuthController{
         $userFromDB = $this->model->getUserByUserName($username);
 
         if ($userFromDB != NULL){
-            return $this->viewReservas->displayError("Ya existe un usuario con ese nombre de usuario");
+            return $this->viewReservations->displayError("Ya existe un usuario con ese nombre de usuario");
         }
 
         //Hashea la contraseña ingresada usando bcrypt
@@ -105,7 +107,6 @@ class AuthController{
         //Se inicia la sesión
         session_start();
         ////Guardo en la sesión el nombre de usuario y la ultima actividad
-        //$_SESSION["ID_USER"] = $userFromDB->ID_User;
         $_SESSION["USERNAME_USER"] = $username;
         $_SESSION["LAST_ACTIVITY"] = time();
 

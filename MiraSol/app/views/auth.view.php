@@ -8,9 +8,8 @@ class AuthView{
     public function displayLogin($error = ""){
         require "templates/form_login.phtml";
     }
-
-    //TODO muestra formulario para registrarse
-    public function displaySignup(){
+    
+    public function displaySignup(){//Función para mostrar formulario para registrarse
         require "templates/form_signup.phtml";
     }
 }

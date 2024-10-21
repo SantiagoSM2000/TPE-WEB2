@@ -5,44 +5,38 @@ require_once "app/models/clients.model.php";
 
 class ReservationsController{
 
-    private $modelReservation;
+    private $modelReservations;
     private $view;
     private $modelClients;
 
     public function __construct($response){//Constructor de la clase
-        $this->modelReservation = new ReservasModel();
-        $this->view = new ReservasView($response);
+        $this->modelReservations = new ReservationsModel();
+        $this->view = new ReservationsView($response);
         $this->modelClients = new ClientsModel();
     }
 
-    public function showReservations(){
+    public function showReservations(){//Función que muestra el listado de reservas
 
         //Llamo al modelo para obtener las reservas ($reservations)
-        $reservations = $this->modelReservation->getReservations();
+        $reservations = $this->modelReservations->getReservations();
         
-        //llamo a la vista para visualizar las reservas
+        //Llamo a la vista para visualizar las reservas
         $this->view->displayReservations($reservations);
     }
 
-    public function validReservationById($id){
+    public function showReservationById($id){//Función para mostrar una reserva específica por id
 
-        //llamo al modelo para preguntar si existe un resultado de reserva con ese id
-        if (!$this->modelReservation->existsReservation($id)){
-            return false;
+        if (!$this->modelReservations->existsReservation($id)){
+            return $this->view->displayError("No existe la reserva con el ID: " . $id);
         }
-        return true;
-    }
-
-    public function showReservationById($id){
-
         //Llamo al modelo para pedirle la reserva por id y el cliente que corresponde con esa reserva
-        $reservation = $this->modelReservation->getReservationById($id);
+        $reservation = $this->modelReservations->getReservationById($id);
         $client = $this->modelClients->getClientByID($reservation->ID_Client);
         //Llamo a la vista para visualizar la reserva especificada junto con el cliente 
         $this->view->displayReservationById($reservation, $client);
     }
 
-    public function showAddReservationForm(){
+    public function showAddReservationForm(){//Función para mostrar el formulario reserva
         //Llamo al modelo para obtener las reservas ($reservations)
         $clients = $this->modelClients->getClients();
         
@@ -50,9 +44,8 @@ class ReservationsController{
         $this->view->displayAddReservation($clients);
     }
 
-    public function addReservation(){ 
+    public function addReservation(){//Función para recibir los inputs del formulario, validarlos e insertarlos en la base de datos
         
-        //TODO validación?
         if (!isset($_POST["ID_Cliente"]) || empty($_POST["ID_Cliente"])){
             return $this->view->displayError("Faltó completar el ID del cliente");
         }
@@ -73,40 +66,40 @@ class ReservationsController{
         $ID_Client = htmlspecialchars($_POST["ID_Cliente"]);
         
 
-        $this->modelReservation->insertReservation($date, $room_number, $image, $ID_Client);
+        $this->modelReservations->insertReservation($date, $room_number, $image, $ID_Client);
 
         header("Location: " . BASE_URL);
     } 
 
-    public function removeReservation($id){
+    public function removeReservation($id){//Función para eliminar una reserva por id
 
         //Llamo al modelo para conseguir la reserva con ese id, si no está entonces devuelve null
 
-        if (!$this->validReservationById($id)){
+        if (!$this->modelReservations->existsReservation($id)){
             return $this->view->displayError("No existe la reserva con el ID: " . $id);
         }
 
         //Llamo al modelo para eliminar la reserva con ese id
-        $this->modelReservation->deleteReservation($id);
+        $this->modelReservations->deleteReservation($id);
         header("Location: " . BASE_URL);
     }
 
-    public function showEdit($id){
+    public function showEdit($id){//Función para mostrar el formulario de editar
 
-        if (!$this->validReservationById($id)){
+        if (!$this->modelReservations->existsReservation($id)){
             return $this->view->displayError("No existe la reserva con el ID: " . $id);
         } else {
             //Llamo al modelo para mostrar los datos y así saber qué se está cambiando
-            $reservation = $this->modelReservation->getReservationById($id);
+            $reservation = $this->modelReservations->getReservationById($id);
             $client = $this->modelClients->getClientByID($reservation->ID_Client);
             $clients = $this->modelClients->getClients();
         }
         $this->view->displayEdit($reservation, $client, $clients);
     }
 
-    public function editReservation($id){
+    public function editReservation($id){//Función para recibir los inputs del formulario, validarlos y actualizar la reserva
 
-        if (!$this->validReservationById($id)){
+        if (!$this->modelReservations->existsReservation($id)){
             return $this->view->displayError("No existe la reserva con el ID: " . $id);
         }
         if (!isset($_POST["ID_Client"]) || empty($_POST["ID_Client"])){
@@ -128,7 +121,7 @@ class ReservationsController{
         $image = htmlspecialchars($_POST["image"]);
         $ID_Client = htmlspecialchars($_POST["ID_Client"]);
     
-        $this->modelReservation->updateReservation($id, $date, $room_number, $image, $ID_Client);
+        $this->modelReservations->updateReservation($id, $date, $room_number, $image, $ID_Client);
         header("Location: " . BASE_URL);
     }
 }

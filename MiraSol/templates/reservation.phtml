@@ -3,13 +3,12 @@
         <div class="d-flex justify-content-center mt-5">
             <div class="card d-flex border border-success-subtle p-3 text-center text-bg-light ">
                 <section class="$reserva">
-                    <h1 class="mb-3"><?php echo "ID de la reserva:  " . $reservation->ID_Reservation ?></h1>
+                    <h1 class="mb-3"><?php echo "ID de la reserva:  " . htmlspecialchars($reservation->ID_Reservation) ?></h1>
                     <p class="lead mt-3"> <em>Número de habitación</em>: <strong> <?php echo htmlspecialchars($reservation->Room_number) ?> </strong></p>
                     <p class="lead mt-3"> <em>Fecha de la reserva</em>: <strong> <?php echo htmlspecialchars($reservation->Date) ?> </strong></p>
                     <p class="lead mt-3"> <em>Nombre del cliente</em>: <strong> <?php echo htmlspecialchars($client->Firstname) . " " . htmlspecialchars($client->Lastname) ?> </strong></p>
                     <p class="lead mt-3"> <em>Email del cliente</em>: <strong> <?php echo htmlspecialchars($client->Email) ?> </strong></p>
                     <p class="lead mt-3"> <em>Telefono del cliente</em>: <strong> <?php echo htmlspecialchars($client->Phone_number) ?> </strong></p>
-                    <?php //var_dump($reservation->Image) ?>
                     <?php if($reservation->Image != NULL):
                             echo "<p class='lead mt-3'> <em>Imagen de la reserva</em>:</p>";
                             echo "<img src=" . htmlspecialchars($reservation->Image) . " alt='Imagen de la habitación' class='img-fluid'>";

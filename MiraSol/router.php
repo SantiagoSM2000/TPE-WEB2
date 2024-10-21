@@ -14,7 +14,6 @@ define('BASE_URL', '//'.$_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] 
 
 $response = new Response();
 
-
 $action = "reservations"; //Accion por defecto
 if (!empty($_GET["action"])){
     $action = $_GET["action"];
@@ -47,7 +46,7 @@ switch ($params[0]) {
     case "reservation":
         sesssionAuthMiddleware($response);
         $controller = new ReservationsController($response);
-        if(isset($params[1]) && $controller->validReservationById($params[1])){
+        if(isset($params[1])){
             $controller->showReservationById($params[1]);
         }else{
             header("Location: " . BASE_URL);
@@ -85,8 +84,12 @@ switch ($params[0]) {
     case "editReservation":
         sesssionAuthMiddleware($response);
         verifyAuthMiddleware($response);//Verifica que el usuario esté logueado
-        $controller = new ReservationsController($response);       
-        $controller->showEdit($params[1]);
+        $controller = new ReservationsController($response);
+        if(isset($params[1])){
+            $controller->showEdit($params[1]);
+        }else{
+            header("Location: " . BASE_URL);
+        }
         break;
 
     case "edit":
@@ -103,7 +106,7 @@ switch ($params[0]) {
         if(isset($params[1])){
             $controller->removeReservation($params[1]);
         }else{
-            $controller->showReservations();
+            header("Location: " . BASE_URL);
         }
         break;
 
@@ -134,5 +137,6 @@ switch ($params[0]) {
         
     default:
         echo "Error 404 Page Not Found";
+        header("Location: " . BASE_URL);
         break;
 }

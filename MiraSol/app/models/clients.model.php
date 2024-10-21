@@ -8,7 +8,7 @@ class ClientsModel extends Model{
         parent::__construct();//Se invoca al constructor de la clase padre (Model)
     }
 
-    public function getClients(){
+    public function getClients(){//Función para conseguir un arreglo de clientes
 
         //Solicito las reservas de la base de datos
         $query = $this->db->prepare("SELECT * FROM clients");
@@ -19,7 +19,7 @@ class ClientsModel extends Model{
         return $clients;
     }
 
-    public function getClientById($id){
+    public function getClientById($id){//Función para consguir un cliente por su id
 
         //Solicito el cliente que coincida en la base de datos con el id que me pasaron 
         $query = $this->db->prepare("SELECT * FROM clients WHERE ID_Client = ?");
@@ -30,15 +30,8 @@ class ClientsModel extends Model{
         return $client;
     }
 
-    public function getClientByUsername($username){
-        $query = $this->db->prepare("SELECT * FROM clients WHERE NombreUsuario = ?");
-        $query->execute([$username]);
-        $user = $query->fetch(PDO::FETCH_OBJ);
+    public function insertClient($Firstname, $Lastname, $Email, $Phone_number){//Función para insertar un cliente nuevo con los parámetros recibidos
 
-        return $user;
-    }
-
-    public function insertClient($Firstname, $Lastname, $Email, $Phone_number){
         $id = NULL;
         $query = $this->db->prepare("INSERT INTO clients (ID_Client, Firstname, Lastname, Email, Phone_number) VALUES (?, ?, ?, ?, ?)");
         $query->execute([$id, $Firstname, $Lastname, $Email, $Phone_number]);

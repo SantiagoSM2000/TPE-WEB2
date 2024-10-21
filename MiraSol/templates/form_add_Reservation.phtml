@@ -1,32 +1,29 @@
 <?php require_once "templates/layout/header.phtml";?>
-
-    
-<div class="card d-flex border border-primary-subtle text-center text-bg-light justify-content-center container-sm mt-2 mb-2">
-    <div class="container-sm mt-2 mb-2">
-        <form method="POST" action="add" id="add">
-            <div class="form-group m-2">
-                <label for="ID_Cliente"><strong><em>ID de cliente</em></strong></label>
-                <select class="form-select text-center" name="ID_Cliente" id="ID_Cliente">
-                    <?php foreach($clients as $client) : ?>
-                        <option value=" <?php echo $client->ID_Client ?>"><?php echo $client->ID_Client . " - " . $client->Firstname . " " . $client->Lastname?></option>
-                    <?php endforeach ?>
-                </select>
-            </div>
-            <div class="form-group m-2">
-                <label for="room_number" class="form-label"><strong><em>Número de habitación</em></strong></label>
-                <input type="number" class="form-control text-center" id="room_number" name="room_number" required>
-            </div>
-            <div class="form-group m-2">
-                <label for="date" class="form-label"><strong><em>Fecha de la reserva</em></strong></label>
-                <input type="date" class="form-control text-center" id="date" name="date" required>
-            </div>
-            <div class="form-group m-2">
-                <label for="image" class="form-label"><strong><em>Link de imagen (hasta 300 caracteres)</em></strong></label>
-                <input type="text" class="form-control text-center" id="image" name="image">
-            </div>
-            <button type="sumbit" class="btn btn-primary">Reservar</button>
-        </form>
+    <div class="card d-flex border border-primary-subtle text-center text-bg-light justify-content-center container-sm mt-2 mb-2">
+        <div class="container-sm mt-2 mb-2">
+            <form method="POST" action="add" id="add">
+                <div class="form-group m-2">
+                    <label for="ID_Cliente"><strong><em>ID de cliente</em></strong></label>
+                    <select class="form-select text-center" name="ID_Cliente" id="ID_Cliente">
+                        <?php foreach($clients as $client) : ?>
+                            <option value=" <?php echo htmlspecialchars($client->ID_Client) ?>"><?php echo htmlspecialchars($client->ID_Client) . " - " . htmlspecialchars($client->Firstname) . " " . htmlspecialchars($client->Lastname)?></option>
+                        <?php endforeach ?>
+                    </select>
+                </div>
+                <div class="form-group m-2">
+                    <label for="room_number" class="form-label"><strong><em>Número de habitación</em></strong></label>
+                    <input type="number" class="form-control text-center" id="room_number" name="room_number" required>
+                </div>
+                <div class="form-group m-2">
+                    <label for="date" class="form-label"><strong><em>Fecha de la reserva</em></strong></label>
+                    <input type="date" class="form-control text-center" id="date" name="date" required>
+                </div>
+                <div class="form-group m-2">
+                    <label for="image" class="form-label"><strong><em>Link de imagen (hasta 300 caracteres)</em></strong></label>
+                    <input type="text" class="form-control text-center" id="image" name="image">
+                </div>
+                <button type="sumbit" class="btn btn-primary">Reservar</button>
+            </form>
+        </div>
     </div>
-</div>
-
 <?php require_once "templates/layout/footer.phtml"; ?>

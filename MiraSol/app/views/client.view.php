@@ -7,12 +7,8 @@ class ClientView{
     public function __construct($user = null) {
         $this->user = $user;
     }
-
-    //Se usa el constructor por defecto
-
-    //Muestra un formulario para hacer login
     
-    public function displayAddClient(){
+    public function displayAddClient(){//Función para mostrar un formulario para hacer login
         require "templates/form_add_Client.phtml";
     }
 }

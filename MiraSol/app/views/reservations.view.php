@@ -1,37 +1,31 @@
 <?php
 
-class ReservasView{
+class ReservationsView{
     
     private $user = null;
 
     public function __construct($user = null) {
         $this->user = $user;
     }
-
-
-    //Muestra un error
-    public function displayError($error){
+    
+    public function displayError($error){//Función para mostrar un error
       require "templates/error.phtml";
     }
-
-    //Muestra un listado de todas las reservas presentes en la base de datos
-    public function displayReservations($reservations){
+    
+    public function displayReservations($reservations){//Función que muestra un listado de todas las reservas presentes en la base de datos
         
         require "templates/reservations_list.phtml";
     }
-
-    //Muestra más información sobre la reserva especificada
-    public function displayReservationById($reservation, $client){ 
+    
+    public function displayReservationById($reservation, $client){//Función que muestra más información sobre la reserva especificada
         require "templates/reservation.phtml";
     }
-
-    //Muestra un formulario para agregar reserva
-    public function displayAddReservation($clients){
+    
+    public function displayAddReservation($clients){//Función que muestra un formulario para agregar reserva
         require "templates/form_add_Reservation.phtml";
     }
     
-    //Muestra un formulario para editar una reserva
-    public function displayEdit($reservation, $client, $clients){
+    public function displayEdit($reservation, $client, $clients){//Función que muestra un formulario para editar una reserva
         require "templates/form_edit_Reservation.phtml";
     }
 }
